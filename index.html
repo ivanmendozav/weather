@@ -1,0 +1,39 @@
+<html lang='es'>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <Title>Weather Forecast</Title>
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="scripts.js"></script>
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id=" search-box">
+        <form id="search-form">
+            <label for="city"> Escoja una ciudad:</label>
+            <!-- cities in ISO_3166 format compatible with OWM -->
+            <select id="city" onChange="loadWeather()" name="city">
+            <option value="Cuenca,EC"> Cuenca, EC</option>
+            <option value="Buenos Aires,AR"> Buenos Aires, AR</option>
+            <option value="Mar del Plata,AR" selected> Mar del Plata, AR</option>
+            <option value="Guayaquil,EC"> Guayaquil, EC</option>
+            <option value="Lovaina,BE"> Lovaina, BE</option>
+            </select>
+        </form>
+    </div>
+    <div id="search-results">
+        <div class="today">
+            <ul>
+                <li class="temp"></li>
+                <li class="temp_min"></li>
+                <li class="temp_max"></li>
+                <li class="humidity"></li>
+                <li class="icon"></li>
+                <li class="description"></li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>
