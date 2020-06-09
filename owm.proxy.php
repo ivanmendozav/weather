@@ -16,11 +16,15 @@
 
     if(isset($_GET["type"])){
         if($_GET["type"]=="forecast"){    //forecast 7 next days
-            echo OWM_Adapter::getForecast($city);
+            $data = OWM_Adapter::getForecast($city);
         }elseif($_GET["type"]=="history"){   //get historical 5 days data
-            echo OWM_Adapter::getHistorical($city, 5);               
+            $data = OWM_Adapter::getHistorical($city, 5);               
+        }elseif($_GET["type"]=="days"){   //get together: forecast 7 next days & get historical 5 days data
+            $data = OWM_Adapter::getDays($city);               
         }
     }else{
-        echo OWM_Adapter::getCurrent($city);  //get current weather
+        $data = OWM_Adapter::getCurrent($city);  //get current weather
     }
+
+    echo json_encode($data); //enconde as JSON and send to response
 ?>

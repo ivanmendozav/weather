@@ -1,0 +1,132 @@
+/*@layout*/
+html,body{
+    margin: 0;
+    padding:0;
+    background-color: #55ddff;
+    min-width: 480px;
+}
+
+form{margin: 0;}
+
+ul,li{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#main{
+    min-width: 480px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+#search-box{
+    width: 480px;
+    margin: 0 auto;
+    padding-top: 20px;
+    text-align: center;   
+}
+
+.today > ul{
+    margin: auto;
+    width:480px;
+    background-position: center 0;
+    padding-bottom: 20px;
+}
+.today > ul > li{
+    height:20px;
+}
+.today .temp{
+    height:90px;    
+}
+.today .city{
+    height: 30px;
+    padding: 10px
+}
+
+.today .date{
+    padding: 10px;
+}
+.historical{
+    background-color:#55ddff;
+    padding-bottom: 25px;
+}
+.historical li.placeholder{
+    float:left;
+    width:240px;
+    margin:0; 
+    padding:0;
+}
+
+.historical > ul{
+    width:720px;
+    margin:0 auto;
+}
+
+@media screen and (max-width: 720px) {
+    .historical > ul{
+        width:480px;
+    }
+  }
+
+
+@media screen and (max-width: 480px) {
+    .historical > ul{
+        width:240px;
+    }
+  }
+
+  /* check icons in https://openweathermap.org/weather-conditions */
+.history, .forecast, .today > ul{
+      background-repeat: no-repeat;
+  }
+
+.history, .forecast{
+    width: 100px;
+    margin: 0 auto;
+}
+
+.history > ul, .forecast > ul, .today > ul{
+    padding-top:90px;
+}
+
+.clearfix{
+    clear:both;
+}
+
+.today .description{
+    padding: 10px;
+}
+
+.today .city{
+    font-size: 1.8em;
+}
+/*@typefaces*/
+
+*{
+    font-family: cursive;
+    font-size:1em;
+}
+.historical{
+    color:white;
+    text-shadow: 2px 2px 2px #4d4d4d;    
+}
+.temp{
+    font-size:2em;
+}
+.today{color: #000;}
+
+.today .temp{
+    font-size:4em;
+    text-align: center;
+    vertical-align: middle;    
+}
+
+.today .date{
+    font-size: 1.5em;
+}
+.today .description{
+    font-size: 1.2em;    
+    font-weight: bold;
+}

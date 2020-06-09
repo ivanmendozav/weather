@@ -15,14 +15,25 @@ class OWM_Adapter{
         $data = json_decode($response,true);
         
         // OWM response to array
+        $weather_array["date"] = OWM_Adapter::formatDate($data["dt"]);
         $weather_array["description"] = $data["weather"][0]["description"];
         $weather_array["icon"] = $data["weather"][0]["icon"];
-        $weather_array["temp"] = $data["main"]["temp"];
-        $weather_array["temp_min"] = $data["main"]["temp_min"];
-        $weather_array["temp_max"] = $data["main"]["temp_max"];
+        $weather_array["temp"] = round($data["main"]["temp"],1);
+        $weather_array["temp_min"] = round($data["main"]["temp_min"],1);
+        $weather_array["temp_max"] = round($data["main"]["temp_max"],1);
         $weather_array["humidity"] = $data["main"]["humidity"];
-        return json_encode($weather_array);
+        return $weather_array;
     }
+
+    /**
+     * _Allows retrieving both forecasted and historical data at once
+     */
+    public static function getDays($city){
+        $previous_days_array = OWM_Adapter::getHistorical($city,5);
+        $next_days_array = OWM_Adapter::getForecast($city);
+        return array_merge($previous_days_array,$next_days_array);
+    }
+
     /**
      * Get forecast for next days from OWM 
      */
@@ -37,12 +48,12 @@ class OWM_Adapter{
         $forecast_array = $data["daily"];
         array_shift($forecast_array); //remove first element (today), only preserve future data
         foreach($forecast_array as $key => $day) {
-            $day_array["date"] = gmdate("Y-m-d", $day["dt"]);
-            $day_array["temp"] = $day["temp"]["day"];
+            $day_array["date"] = OWM_Adapter::formatDate($day["dt"]);
+            $day_array["temp"] = round($day["temp"]["day"],1);
             $day_array["icon"] = $day["weather"][0]["icon"];
             $days_array[] = $day_array;
         }
-        return json_encode($days_array);
+        return $days_array;
     }
     
     /**
@@ -59,7 +70,7 @@ class OWM_Adapter{
             $days_array[] = OWM_Adapter::getForDay($city, $unix_timestamp);
             $days_in_history--;                
         }         
-        return json_encode(array_reverse($days_array));
+        return array_reverse($days_array);
     }
 
     /**
@@ -78,8 +89,8 @@ class OWM_Adapter{
         // OWM response to array
         $forecast_array = $data["hourly"];
         foreach($forecast_array as $key => $day) {
-            $day_array["date"] = gmdate("Y-m-d", $day["dt"]);
-            $day_array["temp"] = $day["temp"];
+            $day_array["date"] = OWM_Adapter::formatDate($day["dt"]);
+            $day_array["temp"] = round($day["temp"],1);
             $day_array["icon"] = $day["weather"][0]["icon"];
         }
         return $day_array;
@@ -95,7 +106,7 @@ class OWM_Adapter{
      * Used first time to retrieve latitude/longitude 
      * (Obsolethe)
     */
-    public static function GeoCode($city){
+    private static function GeoCode($city){
         $geocode_url = "https://geocode.xyz/";
         $prepared_url = $geocode_url.$city."?json=1&&auth=706002883024838650940x6200";
         $response = file_get_contents($prepared_url);         
@@ -104,6 +115,19 @@ class OWM_Adapter{
         $longitude = $data["longt"];
         $latitude = $data["latt"];
         return array("lon" => $longitude, "lat" => $latitude);
+    }
+    /**
+     * Dates in spanish language
+     */
+    private static function formatDate($timestamp){
+        $string = date("D d M", $timestamp);
+        foreach(DAYS as $english => $spanish){
+            $string = str_replace($english, $spanish, $string);
+        }
+        foreach(MONTHS as $english => $spanish){
+            $string = str_replace($english, $spanish, $string);
+        }
+        return $string;
     }
 }
 ?>
