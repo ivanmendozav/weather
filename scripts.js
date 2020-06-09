@@ -24,10 +24,25 @@ function loadForecast() {
         }
     });
 }
+//Get history of the 5 previous days
+function loadHistorical() {
+    let url = 'services.php?type=history&city=' + $("#city").val();
+    $.getJSON(url, function(data) {
+        let x;
+        let index = 1;
+        for (x of data) {
+            $(".history-" + index + " .temp").html(x.temp + "°");
+            $(".history-" + index + " .icon").html(x.icon + ".png");
+            $(".history-" + index + " .date").html(x.date);
+            index++;
+        }
+    });
+}
 //Call all requests
 function loadReports() {
     loadCurrentWeather();
     loadForecast();
+    loadHistorical();
 }
 //on page loading
 $(document).ready(function() {
