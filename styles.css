@@ -50,6 +50,7 @@ ul,li{
 }
 .historical{
     background-color:#55ddff;
+    padding: 0;
     padding-bottom: 25px;
 }
 .historical li.placeholder{
@@ -70,13 +71,13 @@ ul,li{
     }
   }
 
-
+/*
 @media screen and (max-width: 480px) {
     .historical > ul{
         width:240px;
     }
   }
-
+*/
   /* check icons in https://openweathermap.org/weather-conditions */
 .history, .forecast, .today > ul{
       background-repeat: no-repeat;
@@ -85,6 +86,7 @@ ul,li{
 .history, .forecast{
     width: 100px;
     margin: 0 auto;
+    background-size: 100%;
 }
 
 .history > ul, .forecast > ul, .today > ul{
